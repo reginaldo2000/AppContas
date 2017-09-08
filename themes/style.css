@@ -1,0 +1,186 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 13/08/2017, 23:21:31
+    Author     : Reginaldo
+*/
+*{
+    margin: 0;
+    padding: 0;
+    outline: none;
+}
+header {
+    position: absolute;
+    width: 100%;
+    height: 60px;
+    top: 0;
+    background-color: #0275d8;;
+    text-align: center;
+}
+header .title {
+    font-family: arial;
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 20px;
+    color: #fff;
+}
+.main-content {
+    width: 100%;
+    margin-top: 80px;
+    margin-bottom: 40px;
+    padding: 20px;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+}
+.content-title {
+    font-size: 18px;
+    font-weight: bold;
+    font-family: arial;
+    border-bottom: 2px dotted #999;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+.btn {
+    cursor: pointer !important;
+}
+.menu {
+    position: absolute;
+    top: 0;
+    left: -50%;
+    z-index: 10;
+    height: 100%;
+    background-color: #333;
+    width: 50%;
+}
+.menu-header {
+    padding-left: 40px;
+    background-color:rgb(45, 152, 134) !important;
+    color: #fff !important;
+}
+.menu-header:hover {
+    background-color:rgb(45, 152, 134) !important;
+}
+.menu ul {
+    list-style: none;
+}
+.menu ul li {
+    border-bottom: 1px solid #555;
+}
+.menu ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-family: arial;
+    font-size: 18px;
+    display: block;
+    padding: 12px;
+}
+.menu ul li a:hover {
+    background-color: #777;
+    color: #fff;
+}
+.btn-menu a {
+    position: absolute;
+    left: 0;
+    top: 5px;
+    display: block;
+    z-index: 15;
+    width: 40px;
+    height: 40px;
+    color: #fff !important;
+    font-size: 20px;
+}
+.btn-menu i {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.form-cad {
+    padding: 10px;
+    border: 1px solid #aaa;
+    border-radius: 2px;
+    box-shadow: 0px 0px 2px 0px #444;
+}
+.form-title {
+    font-family: arial;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 2px dotted #445;
+}
+.modal {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    background-color: rgba(20,20,20, 0.7);
+    z-index: 500;
+}
+.dlg {
+    position: absolute;
+    top: 20px;
+    padding: 20px 10px;
+    width: calc(94% - 20px);
+    left: 3%;
+    background-color: #fff;
+    border: 1px solid #000;
+}
+.dlg-title {
+    font-family: arial;
+    font-size: 24px;
+}
+.separator {
+    border-bottom: 1px dotted #444;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.bloco {
+    display: inline-block;
+}
+table {
+    width: 100% !important;
+}
+table tr td, table tr th{
+    padding: 2px 5px;
+}
+table tr:nth-child(1){
+    background-color: #f1f1f1 !important;
+}
+.valor-total {
+    width: 100%;
+    padding: 5px 0px;
+    text-align: center;
+    background-color: #5cb85c;
+    margin-top: 5px;
+    color: #fff;
+    font-family: arial;
+}
+.ocultar {
+    display: none;
+}
+.width-100 {
+    width: 100%;
+}
+#valida-senha {
+    display: none;
+}
+@media(min-width:786px) {
+    .content {
+        width: 500px;
+        margin-left: calc(50% - 260px);
+    }
+    .main-content {
+        width: 60%;
+        margin-left: 20%;
+    }
+    .menu {
+        width: 250px;
+    }
+    .width-100 {
+        width: auto;
+    }
+}
