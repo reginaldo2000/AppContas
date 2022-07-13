@@ -54,7 +54,7 @@ define("CONF_SITE_TITLE", "Admin Videos");
 define("CONF_SITE_DESC", "Admin Videos");
 define("CONF_SITE_LANG", "pt_BR");
 define("CONF_SITE_DOMAIN", "https://unicatolicaquixada.edu.br");
-define("CONF_SITE_SESSION", "sistema_cpmd");
+define("CONF_SITE_SESSION", "sistema_contas");
 
 /**
  * SOCIAL

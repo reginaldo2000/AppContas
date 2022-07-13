@@ -15,6 +15,9 @@ class CategoriaController extends Controller {
 
     public function __construct() {
         parent::__construct(__DIR__ . "/../../view");
+        if (!$this->session->has("usuarioLogado")) {
+            redirect("/ops/401");
+        }
     }
 
     public function index(): void {
@@ -22,7 +25,11 @@ class CategoriaController extends Controller {
             $nomeCategoria = filter_input(INPUT_GET, "nome_categoria", FILTER_SANITIZE_SPECIAL_CHARS);
             $categoriaDao = new CategoriaDao();
 
-            $listaCategorias = $categoriaDao->select()->where("nome", "%{$nomeCategoria}%", "LIKE")->orderBy("nome")->fetch();
+            $listaCategorias = $categoriaDao->select()
+                    ->where("nome", "%{$nomeCategoria}%", "LIKE")
+                    ->and("usuario_id", $this->session->usuarioLogado->id)
+                    ->orderBy("nome")
+                    ->fetch();
             echo $this->view->render("categoria", [
                 "titulo" => "Categorias",
                 "listaCategorias" => $listaCategorias,
@@ -39,7 +46,7 @@ class CategoriaController extends Controller {
             if (isset($data["id"])) {
                 $categoriaDao->addParam("id", $data["id"]);
             }
-            $categoriaDao->addParam("usuario_id", 1);
+            $categoriaDao->addParam("usuario_id", $this->session->usuarioLogado->id);
             $categoriaDao->addParam("nome", $data["nome"]);
             $categoriaDao->addParam("data_criacao", date("Y-m-d H:i:s"));
             $categoriaDao->addParam("data_modificacao", date("Y-m-d H:i:s"));

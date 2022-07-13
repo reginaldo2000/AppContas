@@ -33,6 +33,7 @@ class LoginController extends Controller {
                 redirect("/login");
             }
             $this->session->setMessageAlert("Bem vindo {$usuarioObj->nome_completo}, faça bom proveito do sistema!", "alert-info");
+            $this->session->set("usuarioLogado", $usuarioObj);
             redirect("/dashboard");
         } catch (Exception $e) {
             
