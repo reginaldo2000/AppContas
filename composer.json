@@ -1,0 +1,30 @@
+{
+    "name": "reginaldo/contas-app",
+    "description": "WebApp para controle pessoal de gastos",
+    "authors": [
+        {
+            "name": "Reginaldo",
+            "email": "arcs.si3@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Source\\": "source/"
+        },
+        "files": [
+            "source/Config/Config.php",
+            "source/Functions/Helpers.php"
+        ]
+    },
+    "require": {
+        "php": "^7.4",
+        "ext-pdo": "^7.4",
+        "phpmailer/phpmailer": "~6.0",
+        "league/plates": "v4.0.0-alpha",
+        "coffeecode/optimizer": "2.0.*",
+        "coffeecode/router": "1.0.*",
+        "ext-mbstring": "*",
+        "ext-json": "*",
+        "twbs/bootstrap": "5.2.0-beta1"
+    }
+}
