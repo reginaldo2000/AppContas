@@ -6,8 +6,8 @@ set_time_limit(120);
 /**
  * PROJECT URLS
  */
-define("CONF_URL_BASE", "http://localhost/contas-app");
-define("CONF_URL_TEST", "http://localhost/contas-app");
+define("CONF_URL_BASE", "http://localhost/AppContas");
+define("CONF_URL_TEST", "http://localhost/AppContas");
 define("CONF_URL_ADMIN", "/admin");
 define("CONF_URL_ERROR", CONF_URL_BASE . "/404");
 

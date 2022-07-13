@@ -13,6 +13,9 @@ $route->post("/logar", "LoginController:logar");
 $route->get("/dashboard", "HomeController:index");
 
 $route->get("/categoria", "CategoriaController:index");
+$route->post("/categoria/cadastrar", "CategoriaController:salvar");
+$route->get("/categoria/buscar/{id}", "CategoriaController:buscar");
+$route->delete("/categoria/excluir", "CategoriaController:excluir");
 
 
 $route->post("/teste", "CategoriaController:salvar");

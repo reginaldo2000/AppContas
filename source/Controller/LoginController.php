@@ -24,8 +24,10 @@ class LoginController extends Controller {
     public function logar(array $data): void {
         try {
             $usuarioDao = new UsuarioDao();
-            $usuarioDao->addParam("usuario", $data["login_usuario"])->addParam("senha", md5($data["login_senha"]));
-            $usuarioObj = $usuarioDao->select()->fetch();
+            $usuarioObj = $usuarioDao->select()
+                    ->where("usuario", $data["login_usuario"])
+                    ->and("senha", md5($data["login_senha"]))
+                    ->fetch(true);
             if (!$usuarioObj) {
                 $this->session->setMessageAlert("Usuário ou senha incorretos!", "alert-warning");
                 redirect("/login");

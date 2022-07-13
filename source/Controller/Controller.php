@@ -37,31 +37,6 @@ abstract class Controller {
         $this->session = new Session();
     }
 
-    /**
-     * @param bool $error
-     * @param int $code
-     * @param string $message
-     * @param string $content
-     * @param bool $reset
-     * @param string $element
-     * @param array $fields
-     */
-    public function responseJson(bool $error, int $code, string $message, string $content = "", bool $reset = true, string $element = "content_response", ?array $fields = null): void {
-        $response = [
-            "error" => $error,
-            "code" => $code,
-            "message" => $message,
-            "content" => $content,
-            "reset" => $reset,
-            "element" => $element,
-            "fields" => $fields
-        ];
-        header("HTTP/1.0 {$code}");
-        header("Content-Type: application/json");
-        echo json_encode($response, JSON_UNESCAPED_UNICODE);
-        return;
-    }
-
     public function head(string $title): string {
         return $this->seo->render($title, CONF_SITE_DESC, url(), "");
     }

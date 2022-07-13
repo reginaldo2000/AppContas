@@ -71,15 +71,24 @@ abstract class DatabaseUtil {
         }
     }
 
-    public function save(array $rules = []): void {
+    public function save(): void {
         try {
-            $columns = implode(",", array_keys($this->arrayParams));
-            $binds = ":" . implode(",:", array_keys($this->arrayParams));
-            if (array_key_exists("id", $this->arrayParams)) {
+            if ($this->arrayParams["id"] != "") {
                 $sql = $this->update();
             } else {
                 $sql = $this->insert();
             }
+            $stmt = $this->conn()->prepare($sql);
+            $stmt->execute($this->arrayParams);
+            $this->clean();
+        } catch (PDOException $e) {
+            throw new PDOException($e->getMessage(), 500);
+        }
+    }
+
+    public function delete(array $rules = []): void {
+        try {
+            $sql = "DELETE FROM {$this->table} WHERE {$this->table}.id = :id";
             $stmt = $this->conn()->prepare($sql);
             $stmt->execute($this->arrayParams);
             $this->clean();
@@ -133,6 +142,7 @@ abstract class DatabaseUtil {
         } else {
             $this->queryJoin .= "{$typeJoin} {$joinTable} ON {$joinTable}.{$compareTo[0]} = {$prevTable}.{$compareTo[1]} ";
         }
+        return $this;
     }
 
     public function joinParam(string $param, $value, string $operator = "=", string $logic = "AND"): DatabaseUtil {
@@ -162,8 +172,8 @@ abstract class DatabaseUtil {
         $this->arrayParams = [];
         $this->joinTable = "";
         $this->queryJoin = "";
-        $orderBy = "";
-        $query = "";
+        $this->orderBy = "";
+        $this->query = "";
     }
 
     private function insert(): string {
@@ -174,7 +184,7 @@ abstract class DatabaseUtil {
         return $sql;
     }
 
-    private function update(): string {
+    private function update(array $rules = []): string {
         $aux = [];
         $sql = "UPDATE {$this->table} SET ";
         foreach ($this->arrayParams as $key => $value) {
@@ -182,7 +192,7 @@ abstract class DatabaseUtil {
                 array_push($aux, "{$key} = :{$key}");
             }
         }
-        $sql .= implode(",", $aux). " WHERE id = :id";
+        $sql .= implode(",", $aux) . " WHERE {$this->table}.id = :id";
         return $sql;
     }
 
