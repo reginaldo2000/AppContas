@@ -116,13 +116,11 @@ abstract class DatabaseUtil {
     }
 
     public function between(string $param, array $values, string $logic): DatabaseUtil {
-        $keys = array_keys($values);
         if ($this->queryParams != "") {
-            $this->queryParams .= " {$logic} {$this->table}.{$param} BETWEEN :{$keys[0]} AND :{$keys[1]}";
+            $this->queryParams .= " {$logic} {$this->table}.{$param} BETWEEN '{$values[0]}' AND '{$values[1]}'";
         } else {
-            $this->queryParams .= " WHERE {$logic} {$this->table}.{$param} BETWEEN :{$keys[0]} AND :{$keys[1]}";
+            $this->queryParams .= " WHERE {$this->table}.{$param} BETWEEN '{$values[0]}' AND '{$values[1]}'";
         }
-        $this->arrayParams[$param] = $value;
         return $this;
     }
 

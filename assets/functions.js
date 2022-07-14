@@ -45,3 +45,13 @@ const excluirCategoria = id => {
         }
     });
 };
+
+const cadastrarContas = () => {
+    $("#modalSalvarConta").modal("show");
+};
+
+const maskMoney = element => {
+    let value = $(element).val().replace(",", "").replace(".", "").replace("R$ ", "");
+    novoValor = parseFloat(value / 100);
+    $(element).val(novoValor.toLocaleString('pt-BR'));
+};

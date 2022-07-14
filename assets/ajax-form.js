@@ -38,10 +38,10 @@ const sendFormAjax = form => {
             if (response.message != "") {
                 alertMessage(response.message, $(form).attr("alert-target"), "alert-success");
             }
-            if(response.data.content != "") {
+            if (response.data.content != "") {
                 setHtml(response.data.elementId, response.data.content);
             }
-            if(response.data.reset) {
+            if (response.data.reset) {
                 form.reset();
                 $(".modal").modal("hide");
             }
@@ -62,3 +62,17 @@ $(document).ready(() => {
         });
     });
 });
+
+(() => {
+    'use strict'
+    const forms = document.querySelectorAll('.needs-validation')
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+            form.classList.add('was-validated')
+        }, false)
+    })
+})()

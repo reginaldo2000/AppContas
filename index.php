@@ -17,6 +17,7 @@ $route->post("/categoria/cadastrar", "CategoriaController:salvar");
 $route->get("/categoria/buscar/{id}", "CategoriaController:buscar");
 $route->delete("/categoria/excluir", "CategoriaController:excluir");
 
+$route->get("/conta", "ContaController:index");
 
 $route->post("/teste", "CategoriaController:salvar");
 

@@ -25,7 +25,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="<?= url("/conta"); ?>">
                        <i class="bi bi-currency-exchange"></i>&nbsp;Contas
                     </a>
                 </li>

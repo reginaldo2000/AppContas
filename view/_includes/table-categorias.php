@@ -15,10 +15,14 @@
                     <td><?= date_fmt($categoria->data_criacao, "d/m/Y H:i"); ?></td>
                     <td><?= date_fmt($categoria->data_modificacao, "d/m/Y H:i"); ?></td>
                     <td class="text-center">
-                        <a href="#" class="btn btn-secondary btn-sm" onclick="editarCategoria(<?= $categoria->id; ?>);"><i class="bi bi-pencil-fill"></i></a>
+                        <a href="#" class="btn btn-secondary btn-sm" onclick="editarCategoria(<?= $categoria->id; ?>);">
+                            <i class="bi bi-pencil-fill"></i>
+                        </a>
                     </td>
                     <td class="text-center">
-                        <a href="#" class="btn btn-danger btn-sm" onclick="excluirCategoria(<?= $categoria->id; ?>);"><i class="bi bi-trash-fill"></i></a>
+                        <a href="#" class="btn btn-danger btn-sm" onclick="excluirCategoria(<?= $categoria->id; ?>);">
+                            <i class="bi bi-trash-fill"></i>
+                        </a>
                     </td>
                 </tr>
             <?php endforeach; ?>
