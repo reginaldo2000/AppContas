@@ -1,7 +1,6 @@
 
 const setFieldsValues = (responseData) => {
-    Object.keys(responseData).forEach((item) => {
-        console.log(item);
+    Object.keys(responseData).forEach(item => {
         $(`#${item}`).val(responseData[item]);
     });
 };
@@ -31,7 +30,7 @@ const sendFormAjax = form => {
         cache: false,
         contentType: false,
         beforeSend: () => {
-
+//            modalOpen("");
         },
         success: response => {
             console.log(response);
@@ -44,9 +43,11 @@ const sendFormAjax = form => {
             if (response.data.reset) {
                 form.reset();
                 $(".modal").modal("hide");
+                $(form).removeClass("was-validated");
             }
         },
         error: erro => {
+            alert("erro");
             console.log(erro);
         }
     });

@@ -5,10 +5,11 @@
                 <h5 class="modal-title">Salvar Conta</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="POST" action="<?= url("/categoria/cadastrar"); ?>" 
+            <form method="POST" action="<?= url("/conta/cadastrar"); ?>" 
                   autocomplete="off" class="ajax-form needs-validation" onsubmit="sendFormAjax(this);"
                   alert-target="alertMessage" novalidate>
-                <input type="text" name="id" id="categoriaId" hidden>
+                
+                <input type="text" name="id" id="contaId" hidden>
                 <div class="modal-body">
                     <div class="row">
                         
@@ -19,7 +20,7 @@
                         
                         <div class="col-lg-12 mb-3">
                             <label>Categoria:</label>
-                            <select name="categoria" id="contaCategoria" class="form-control" required>
+                            <select name="categoria" id="contaCategoria" class="form-control" onchange="compraParcelada(this.value);" required>
                                 <option value="">Selecione uma categoria</option>
                                 <?php foreach ($listaCategorias as $categoria): ?>
                                     <option value="<?= $categoria->id; ?>"><?= $categoria->nome; ?></option>
@@ -34,7 +35,12 @@
                         
                         <div class="col-lg-6">
                             <label>Data da Conta:</label>
-                            <input type="date" name="data_conta" id="contaDataConta" class="form-control" required>
+                            <input type="date" name="data_conta" id="contaDataConta" class="form-control" value="<?= date("Y-m-d"); ?>" required>
+                        </div>
+                        
+                        <div id="parcelas" class="col-lg-12" hidden>
+                            <label>Parcelas:</label>
+                            <input type="number" name="parcelas" class="form-control">
                         </div>
                         
                     </div>

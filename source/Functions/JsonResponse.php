@@ -29,9 +29,18 @@ class JsonResponse {
         echo json_encode($array, JSON_UNESCAPED_UNICODE);
     }
     
+    /**
+     * @param bool $erro
+     * @param int $code
+     * @param string $message
+     * @param string $elemenId
+     * @param string $content
+     * @param bool $reset
+     * @return void
+     */
     public static function contentJson(bool $erro, int $code, string $message, string $elemenId = "", string $content = "", bool $reset = true): void {
-        header("HTTP/1.0 {$code}");
         header("Content-Type: application/json");
+        header("HTTP/1.0 {$code}");
         $array = [
             "erro" => $erro, 
             "code" => $code,

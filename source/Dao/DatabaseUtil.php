@@ -74,6 +74,7 @@ abstract class DatabaseUtil {
     public function save(): void {
         try {
             if ($this->arrayParams["id"] != "") {
+                unset($this->arrayParams["data_criacao"]);
                 $sql = $this->update();
             } else {
                 $sql = $this->insert();
@@ -126,9 +127,9 @@ abstract class DatabaseUtil {
 
     public function orderBy(string $column, string $orientation = "ASC"): DatabaseUtil {
         if ($this->orderBy == "") {
-            $this->orderBy .= " ORDER BY {$this->table}.{$column} {$orientation}";
+            $this->orderBy .= " ORDER BY {$column} {$orientation}";
         } else {
-            $this->orderBy .= ", {$this->table}.{$column} {$orientation}";
+            $this->orderBy .= ", {$column} {$orientation}";
         }
         return $this;
     }

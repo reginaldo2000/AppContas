@@ -48,10 +48,37 @@ const excluirCategoria = id => {
 
 const cadastrarContas = () => {
     $("#modalSalvarConta").modal("show");
+    document.querySelectorAll("form").forEach(item => {
+       item.reset(); 
+    });
 };
 
+const editarConta = id => {
+    $.ajax({
+        type: "GET",
+        dataType: "JSON",
+        url: `${URL_BASE}/conta/buscar/${id}`,
+        success: response => {
+            setFieldsValues(response.data);
+            $("#modalSalvarConta").modal("show");
+        }, 
+        error: e => {
+            console.log(e);
+        }
+    });
+}
+
 const maskMoney = element => {
-    let value = $(element).val().replace(",", "").replace(".", "").replace("R$ ", "");
-    novoValor = parseFloat(value / 100);
-    $(element).val(novoValor.toLocaleString('pt-BR'));
+    let valor = $(element).val();
+    $.ajax({
+        type: "GET",
+        dataType: "JSON",
+        url: `${URL_BASE}/conta/formatar-valor/${valor}`,
+        success: response => {
+            $(element).val(response.valorFormatado);
+        }, 
+        error: e => {
+            console.log(e);
+        }
+    });
 };

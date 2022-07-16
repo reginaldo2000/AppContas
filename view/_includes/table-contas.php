@@ -15,14 +15,14 @@
                     <td><?= $conta->descricao; ?></td>
                     <td><?= $conta->nome; ?></td>
                     <td><?= "R$ ".number_format($conta->valor, 2, ",", "."); ?></td>
-                    <td><?= date_fmt($conta->data_conta, "d/m/Y H:i"); ?></td>
+                    <td><?= date_fmt($conta->data_conta, "d/m/Y"); ?></td>
                     <td class="text-center">
-                        <a href="#" class="btn btn-secondary btn-sm">
+                        <a class="btn btn-secondary btn-sm" onclick="editarConta(<?= $conta->id; ?>);">
                             <i class="bi bi-pencil-fill"></i>
                         </a>
                     </td>
                     <td class="text-center">
-                        <a href="#" class="btn btn-danger btn-sm">
+                        <a class="btn btn-danger btn-sm">
                             <i class="bi bi-trash-fill"></i>
                         </a>
                     </td>

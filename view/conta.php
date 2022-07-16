@@ -3,7 +3,7 @@
 
 <div id="alertMessage"></div>
 
-<a href="#" class="btn btn-success mb-2" onclick="cadastrarContas();">
+<a class="btn btn-success mb-2" onclick="cadastrarContas();">
     Nova Conta
 </a>
 
@@ -35,7 +35,7 @@
     </form>
 </div>
 
-<div class="table-responsive mt-4">
+<div id="tableContas" class="table-responsive mt-4">
     <?php $v->insert("_includes/table-contas"); ?>
 </div>
 
@@ -56,5 +56,23 @@
             $("#dataInicial").removeAttr("required");
         }
     };
+
+    const compraParcelada = value => {
+        $.ajax({
+            type: "GET",
+            dataType: "JSON",
+            url: `${URL_BASE}/categoria/${value}`,
+            success: response => {
+                if (response.data.tipo == "parcela") {
+                    $("#parcelas").removeAttr("hidden");
+                } else {
+                    $("#parcelas").attr("hidden", true);
+                }
+            },
+            error: e => {
+                console.log(e);
+            }
+        });
+    }
 </script>
 <?php $v->end(); ?>

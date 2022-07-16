@@ -13,11 +13,14 @@ use Source\Functions\JsonResponse;
  */
 class CategoriaController extends Controller {
 
+    private CategoriaDao $categoriaDao;
+
     public function __construct() {
         parent::__construct(__DIR__ . "/../../view");
         if (!$this->session->has("usuarioLogado")) {
             redirect("/ops/401");
         }
+        $this->categoriaDao = new CategoriaDao();
     }
 
     public function index(): void {
@@ -98,6 +101,16 @@ class CategoriaController extends Controller {
             JsonResponse::contentJson(false, 200, "Categoria excluída com sucesso!", "tableCategorias", $render);
         } catch (Exception $e) {
             JsonResponse::contentJson(true, $e->getCode(), $e->getMessage());
+        }
+    }
+
+    public function getCategoria(array $data): void {
+        try {
+            $id = $data["id"];
+            $categoria = $this->categoriaDao->select()->where("id", $id)->fetch(true);
+            JsonResponse::fields(false, 200, "", (array) $categoria);
+        } catch (Exception $e) {
+            JsonResponse::fields(true, $e->getCode(), $e->getMessage(), []);
         }
     }
 
