@@ -11,8 +11,13 @@
     <form method="GET" action="" class="needs-validation" novalidate autocomplete="off">
         <div class="row">
             <div class="col-lg-4 mb-2">
-                <label>Descrição da Conta:</label>
-                <input type="text" name="descricao" class="form-control" value="<?= $descricao; ?>">
+                <label>Categoria:</label>
+                <select name="categoria" class="form-control">
+                    <option value="">Selecione uma categoria</option>
+                    <?php foreach ($listaCategorias as $categoria) : ?>
+                        <option value="<?= $categoria->id; ?>"><?= $categoria->nome; ?></option>
+                    <?php endforeach; ?>
+                </select>
             </div>
 
             <div class="col-lg-3 mb-2">

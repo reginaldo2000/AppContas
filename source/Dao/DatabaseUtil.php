@@ -11,7 +11,8 @@ use PDOException;
  *
  * @author Reginaldo
  */
-abstract class DatabaseUtil {
+abstract class DatabaseUtil
+{
 
     private ?PDO $conn = null;
     private string $table = "";
@@ -20,13 +21,18 @@ abstract class DatabaseUtil {
     private string $joinTable = "";
     private string $queryJoin = "";
     private string $orderBy = "";
+    private string $groupBy = "";
+    private string $limit = "";
     private string $query = "";
 
-    public function __construct(string $table) {
+
+    public function __construct(string $table)
+    {
         $this->table = $table;
     }
 
-    private function conn(): ?PDO {
+    private function conn(): ?PDO
+    {
         try {
             $dbOptions = [
                 PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4",
@@ -43,9 +49,10 @@ abstract class DatabaseUtil {
         }
     }
 
-    public function select(array $columns = []): DatabaseUtil {
+    public function select(array $columns = []): DatabaseUtil
+    {
         $this->query = "SELECT {$this->stringColumns($columns)} FROM "
-                . "{$this->table} ";
+            . "{$this->table} ";
         return $this;
     }
 
@@ -54,11 +61,14 @@ abstract class DatabaseUtil {
      * @return mixed
      * @throws PDOException
      */
-    public function fetch(bool $isObject = false) {
+    public function fetch(bool $isObject = false)
+    {
         try {
             $this->query .= "{$this->queryJoin} "
-                    . "{$this->queryParams} "
-                    . "{$this->orderBy}";
+                . "{$this->queryParams} "
+                . "{$this->groupBy} "
+                . "{$this->orderBy} "
+                . "{$this->limit}";
             $stmt = $this->conn()->prepare($this->query);
             $stmt->execute($this->arrayParams);
             $this->clean();
@@ -71,7 +81,8 @@ abstract class DatabaseUtil {
         }
     }
 
-    public function save(): void {
+    public function save(): void
+    {
         try {
             if ($this->arrayParams["id"] != "") {
                 unset($this->arrayParams["data_criacao"]);
@@ -87,7 +98,8 @@ abstract class DatabaseUtil {
         }
     }
 
-    public function delete(array $rules = []): void {
+    public function delete(array $rules = []): void
+    {
         try {
             $sql = "DELETE FROM {$this->table} WHERE {$this->table}.id = :id";
             $stmt = $this->conn()->prepare($sql);
@@ -98,25 +110,29 @@ abstract class DatabaseUtil {
         }
     }
 
-    public function where(string $param, $value, string $operator = "="): DatabaseUtil {
+    public function where(string $param, $value, string $operator = "="): DatabaseUtil
+    {
         $this->queryParams .= " WHERE {$this->table}.{$param} {$operator} :{$param}";
         $this->arrayParams[$param] = $value;
         return $this;
     }
 
-    public function and(string $param, $value, string $operator = "="): DatabaseUtil {
+    public function and(string $param, $value, string $operator = "="): DatabaseUtil
+    {
         $this->queryParams .= " AND {$this->table}.{$param} {$operator} :{$param}";
         $this->arrayParams[$param] = $value;
         return $this;
     }
 
-    public function or(string $param, $value, string $operator = "="): DatabaseUtil {
+    public function or(string $param, $value, string $operator = "="): DatabaseUtil
+    {
         $this->queryParams .= " OR {$this->table}.{$param} {$operator} :{$param}";
         $this->arrayParams[$param] = $value;
         return $this;
     }
 
-    public function between(string $param, array $values, string $logic): DatabaseUtil {
+    public function between(string $param, array $values, string $logic): DatabaseUtil
+    {
         if ($this->queryParams != "") {
             $this->queryParams .= " {$logic} {$this->table}.{$param} BETWEEN '{$values[0]}' AND '{$values[1]}'";
         } else {
@@ -125,7 +141,8 @@ abstract class DatabaseUtil {
         return $this;
     }
 
-    public function orderBy(string $column, string $orientation = "ASC"): DatabaseUtil {
+    public function orderBy(string $column, string $orientation = "ASC"): DatabaseUtil
+    {
         if ($this->orderBy == "") {
             $this->orderBy .= " ORDER BY {$column} {$orientation}";
         } else {
@@ -134,7 +151,26 @@ abstract class DatabaseUtil {
         return $this;
     }
 
-    public function joinTable(string $joinTable, string $prevTable, array $compareTo, string $typeJoin = "INNER JOIN"): DatabaseUtil {
+    public function groupBy(array $columns, string $table): DatabaseUtil
+    {
+        if ($this->groupBy == "") {
+            $this->groupBy = " GROUP BY " . $table . "." . $columns[0];
+        }
+        for ($i = 1; $i < count($columns); $i++) {
+            $value = $columns[$i];
+            $this->groupBy .= ", {$table}.{$value}";
+        }
+        return $this;
+    }
+
+    public function limit(int $offset, int $length): DatabaseUtil
+    {
+        $this->limit .= " LIMIT {$offset}, {$length}";
+        return $this;
+    }
+
+    public function joinTable(string $joinTable, string $prevTable, array $compareTo, string $typeJoin = "INNER JOIN"): DatabaseUtil
+    {
         $this->joinTable = $joinTable;
         if ($this->queryJoin == "") {
             $this->queryJoin .= "{$typeJoin} {$joinTable} ON {$joinTable}.{$compareTo[0]} = {$prevTable}.{$compareTo[1]} ";
@@ -144,7 +180,8 @@ abstract class DatabaseUtil {
         return $this;
     }
 
-    public function joinParam(string $param, $value, string $operator = "=", string $logic = "AND"): DatabaseUtil {
+    public function joinParam(string $param, $value, string $operator = "=", string $logic = "AND"): DatabaseUtil
+    {
         if ($this->queryParams == "") {
             $this->queryParams .= " WHERE {$this->joinTable}.{$param} {$operator} :{$param}";
         } else {
@@ -154,19 +191,24 @@ abstract class DatabaseUtil {
         return $this;
     }
 
-    public function addParam(string $param, $value): void {
+    public function addParam(string $param, $value): void
+    {
         $this->arrayParams[$param] = $value;
     }
 
-    public function lastInsertId(): ?int {
+
+    public function lastInsertId(): ?int
+    {
         return $this->conn()->lastInsertId();
     }
 
-    private function stringColumns(array $columns): string {
+    private function stringColumns(array $columns): string
+    {
         return (count($columns) > 0 ? implode(",", $columns) : "*");
     }
 
-    private function clean(): void {
+    private function clean(): void
+    {
         $this->queryParams = "";
         $this->arrayParams = [];
         $this->joinTable = "";
@@ -175,15 +217,17 @@ abstract class DatabaseUtil {
         $this->query = "";
     }
 
-    private function insert(): string {
+    private function insert(): string
+    {
         $columns = implode(",", array_keys($this->arrayParams));
         $binds = ":" . implode(",:", array_keys($this->arrayParams));
         $sql = "INSERT INTO {$this->table} ({$columns}) "
-                . "VALUES ({$binds})";
+            . "VALUES ({$binds})";
         return $sql;
     }
 
-    private function update(array $rules = []): string {
+    private function update(array $rules = []): string
+    {
         $aux = [];
         $sql = "UPDATE {$this->table} SET ";
         foreach ($this->arrayParams as $key => $value) {
@@ -194,5 +238,4 @@ abstract class DatabaseUtil {
         $sql .= implode(",", $aux) . " WHERE {$this->table}.id = :id";
         return $sql;
     }
-
 }

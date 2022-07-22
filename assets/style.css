@@ -96,3 +96,21 @@ body {
     background-color: #444;
     color: #fff;
 }
+
+.content_resultado {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    padding: 20px;
+    background-color: #ebebeb;
+    border-color: #ccc;
+    border-radius: 5px;
+    margin-bottom: 16px;
+}
+.content_resultado .resultado {
+    flex-basis: 30%;
+    text-align: center;
+    font-size: 1.2rem;
+    margin: 0;
+}

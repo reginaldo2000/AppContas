@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>ContasApp</title>
         <link href="<?= url("/vendor/twbs/bootstrap/dist/css/bootstrap.min.css"); ?>" rel="stylesheet">
         <link href="<?= url("/assets/style.css"); ?>" rel="stylesheet">
@@ -53,8 +54,10 @@
         
         <script src="<?= url("/assets/jquery.min.js"); ?>"></script>
         <script src="<?= url("/vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"); ?>"></script>
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
         <script src="<?= url("/assets/ajax-form.js"); ?>"></script>
         <script src="<?= url("/assets/functions.js"); ?>"></script>
+        <script src="<?= url("/assets/dashboard.js"); ?>"></script>
         <?= $v->section("script"); ?>
     </body>
 </html>
