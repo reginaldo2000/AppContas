@@ -49,7 +49,7 @@ const loadGraficoCategorias = () => {
                 },
                 series: response.data,
                 labels: response.labels,
-                colors:['#f00', '#fc2', '#4d4', "#22d", "#c3e", "#f0a", "#0ee"]
+                colors: ['#f00', '#fc2', '#4d4', "#22d", "#c3e", "#f0a", "#0ee"]
             };
 
             var chart = new ApexCharts(document.querySelector("#graficoCategorias"), options);
@@ -81,25 +81,34 @@ const loadGraficoMediaGastos = () => {
 };
 
 const loadGraficoGastoSaldo = () => {
-    let options = {
-        chart: {
-            type: 'area'
-        },
-        series: [{
-            name: 'Gasto',
-            data: [31, 40, 28]
-        }, {
-            name: 'Saldo',
-            data: [11, 32, 45]
-        }],
-        stroke: {
-            curve: 'smooth',
-        },
-        xaxis: {
-            categories: ["Jan", "Feb", "Mar"]
-        }
-    }
+    $.ajax({
+        type: "GET",
+        dataType: "JSON",
+        url: `${URL_BASE}/grafico/gasto-saldo`,
+        success: response => {
+            console.log(response.gasto);
+            let options = {
+                chart: {
+                    type: 'area'
+                },
+                series: [{
+                    name: 'Gasto',
+                    data: response.gasto
+                }, {
+                    name: 'Saldo',
+                    data: response.saldo
+                }],
+                stroke: {
+                    curve: 'smooth',
+                },
+                xaxis: {
+                    categories: response.meses
+                }
+            }
 
-    var chart = new ApexCharts(document.querySelector("#graficoSaldoGasto"), options);
-    chart.render();
+            var chart = new ApexCharts(document.querySelector("#graficoSaldoGasto"), options);
+            chart.render();
+        }
+    });
+
 };

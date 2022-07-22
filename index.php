@@ -16,6 +16,7 @@ $route->post("/logar", "LoginController:logar");
 $route->get("/dashboard", "HomeController:index");
 $route->get("/grafico/meses", "HomeController:graficoGastoMes");
 $route->get("/grafico/categorias", "HomeController:graficoContasCategoria");
+$route->get("/grafico/gasto-saldo", "HomeController:graficoGastoSaldo");
 
 $route->get("/categoria", "CategoriaController:index");
 $route->get("/categoria/{id}", "CategoriaController:getCategoria");
@@ -29,7 +30,7 @@ $route->post("/conta/cadastrar", "ContaController:salvarConta");
 $route->get("/conta/buscar/{id}", "ContaController:buscarConta");
 //$route->
 
-$route->get("/teste", "HomeController:graficoContasCategoria");
+$route->get("/teste", "HomeController:graficoGastoSaldo");
 
 $route->namespace("Source\Controller")->group("/ops");
 $route->get("/{code}", "ErroController:erro");

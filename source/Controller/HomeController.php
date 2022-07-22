@@ -77,4 +77,26 @@ class HomeController extends Controller
         }
         echo json_encode(["data" => $data, "labels" => $labels], JSON_UNESCAPED_UNICODE);
     }
+
+    public function graficoGastoSaldo(): void
+    {
+        $gasto = [];
+        $saldo = [];
+        $meses = [];
+        for ($i = 2; $i >= 0; $i--) {
+            $dataInicio = new DateTime(date("Y") . "-" . (date("m") + 1) . "-01");
+            $dataInicio->setDate($dataInicio->format("Y"), $dataInicio->format("m") - $i, $dataInicio->format("d"));
+
+            $dataFim = new DateTime($dataInicio->format("Y-m-t"));
+
+            $contasMes = $this->contaDao->select(["SUM(valor) as valor_total"])
+                ->between("data_conta", [$dataInicio->format("Y-m-d"), $dataFim->format("Y-m-d")], "AND")
+                ->fetch(true);
+
+            array_push($gasto, (float) $contasMes->valor_total);
+            array_push($saldo, (2850 - $contasMes->valor_total));
+            array_push($meses, mesTraduzido($dataInicio->format("M")));
+        }
+        echo json_encode(["gasto" => $gasto, "saldo" => $saldo, "meses" => $meses], JSON_UNESCAPED_UNICODE);
+    }
 }
